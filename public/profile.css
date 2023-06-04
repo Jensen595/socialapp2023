@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+h1 {
+    text-align: center;
+    margin-top: 0;
+}
+img {
+    display: block;
+    margin: 0 auto;
+    max-width: 200px;
+    border-radius: 50%;
+}
+.info {
+    margin-top: 20px;
+    text-align: center;
+}
+.info p {
+    margin: 10px 0;
+}
+.info p span {
+    font-weight: bold;
+}
+.edit-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.form {
+    display: none;
+    margin-top: 20px;
+    text-align: center;
+}
+.form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.form input[type="text"], .form textarea {
+    display: block;
+    margin: 10px auto;
+    padding: 5px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.form button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+h2 {
+
+    text-align: center;
+    font-size: 250%;
+
+  }

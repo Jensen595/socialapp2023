@@ -1,0 +1,27 @@
+{
+  "user": [
+    {
+      "id": 1,
+      "name": "Jensen George",
+      "username": "jen",
+      "email": "jensen@example.com",
+      "password": "password123",
+      "avatar": "https://example.com/avatar.jpg",
+      "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  
+    },
+    {
+      
+      "id": 2,
+      "name": "Jane bo",
+      "username": "janebo",
+      "email": "janebo@example.com",
+      "password": "password456",
+      "avatar": "https://example.com/avatar.jpg",
+      "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    }
+  ]
+}
+ 
+       
+

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="hometest.css">
+    <link rel="stylesheet" type="text/css" href="game.css">
+
+    <title>Game Placeholder</title>
+    <style>
+        /* Add some basic styles for the placeholder */
+        .game-placeholder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 600px; /* Adjust the height as needed */
+            font-size: 24px;
+            color: #999;
+        }
+
+    
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Game Page!</h1>
+
+
+    <nav class="main-menu">
+        <ul>
+            <li>
+                <a href="hometest.html">
+                    <i class="fa fa-home fa-2x"></i>
+                    <span class="nav-text">
+                       Home
+                    </span>
+                </a>
+              
+            </li>
+        
+            <li class="has-subnav">
+                <a href="chat.html">
+                    <i class="fa fa-globe fa-2x"></i>
+                    <span class="nav-text">
+                        Global Chat 
+                    </span>
+                </a>
+                
+            </li>
+            <li class="has-subnav">
+                <a href="game.html">
+                   <i class="fa fa-camera-retro fa-2x"></i>
+                    <span class="nav-text">
+                       Game Room
+                    </span>
+                </a>
+               
+            </li>
+      
+        </ul>
+
+        <ul class="logout">
+            <li>
+               <a href="logout.html">
+                     <i class="fa fa-power-off fa-2x"></i>
+                     <form action="/logout" method="POST">
+                    <span class="nav-text" type="submit" value="Logout">
+                    
+                        <input type="submit" value="Logout">
+                    </form>
+                    </span>
+                </a>
+            </li>  
+        </ul>
+    </nav>
+    
+
+  <!-- This code handles the construct 3 game --> 
+    <div class="game-placeholder">
+        <iframe width="845" height="503" allow="fullscreen; autoplay; encrypted-media" src="https://games.construct.net/52826/latest" frameborder="0" 
+    allowfullscreen="true" msallowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" 
+    allowpaymentrequest="false" referrerpolicy="unsafe-url" sandbox="allow-same-origin allow-forms allow-scripts allow-pointer-lock allow-orientation-lock allow-popups" 
+    scrolling="no"></iframe>
+    </div>
+
+   
+</body>
+</html>
+
+
+

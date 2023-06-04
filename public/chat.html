@@ -1,0 +1,264 @@
+<html>
+  <head>
+	<link rel="stylesheet" type="text/css" href="hometest.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="chatscript.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  </head>
+  <body><div class="area">
+            <h1>Global Chat</h1>
+
+            <h2>Disclamer</h2>
+
+            <h3>Don't refresh the page or the timer resets</h3>
+
+
+            <div id="timertext">Wait till the timer is zero</div>
+  <div id="counttimere"></div>
+
+
+        <!-- This code controls the side view navigation bar --> 
+         <nav class="main-menu">
+            <ul>
+                <li>
+                    <a href="hometest.html">
+                        <i class="fa fa-home fa-2x"></i>
+                        <span class="nav-text">
+                           Home
+                        </span>
+                    </a>
+                  
+                </li>
+                
+                <li class="has-subnav">
+                    <a href="chat.html">
+                        <i class="fa fa-globe fa-2x"></i>
+                        <span class="nav-text">
+                            Global Chat
+                        </span>
+                    </a>
+                    
+                </li>
+                <li class="has-subnav">
+                    <a href="game.html">
+                       <i class="fa fa-camera-retro fa-2x"></i>
+                        <span class="nav-text">
+                            Game Room
+                        </span>
+                    </a>
+                   
+                </li>
+          
+            </ul>
+
+            <ul class="logout">
+                <li>
+                   <a href="logout.html">
+                         <i class="fa fa-power-off fa-2x"></i>
+                         <form action="/logout" method="POST">
+                        <span class="nav-text" type="submit" value="Logout">
+                        
+                            <input type="submit" value="Logout">
+                        </form>
+                        </span>
+                    </a>
+                </li>  
+            </ul>
+        </nav>
+        
+            
+
+         <!-- This code handles the chat section and displays when a message is sent and recived --> 
+            <div class="box">
+                <div class="content">
+                  <ul id="recent-posts"></ul>
+                  </div>
+              </div>
+
+
+    
+              <!-- This script controls message sent likes and images. Code used from  --> 
+            <script>
+                let recentPosts=[]
+        
+                let recentPostsList=document.querySelector('#recent-posts')
+                
+                fetch('/getposts')
+                    .then(response=>response.json())
+                    .then(fetchedData=>{
+                        recentPosts=fetchedData.posts
+                        handleServerData()
+                    })
+        
+                     function handleServerData(){
+                    recentPostsList.innerHTML=''
+                    recentPosts.forEach(function(post){
+                        // console.log(post._id.toString(), post.likes);
+                        let li=document.createElement('li')
+                        let liText=document.createElement('p')
+                        liText.textContent=`${post.message} (by ${post.postedBy}) [likes:${post.likes}]`
+                        //create a 'like' button
+                        let button=document.createElement('button')
+                        button.textContent='like'
+                        button.addEventListener('click',processLike)
+        
+        
+                        //add a unique attribute for the like button so it knows which post it belongs to
+                        button.setAttribute('data-post-id',post._id.toString())
+                        //create a 'view and comment' button
+                        let viewButton=document.createElement('button')
+                        viewButton.textContent='view and comment'
+                        viewButton.addEventListener('click',processView)
+                        //add a unique attribute for the like button so it knows which post it belongs to
+                        viewButton.setAttribute('view-post-id',post._id.toString())
+                   
+                        //like button
+                        li.appendChild(liText)
+                        li.appendChild(button)
+                  
+                        // grab the comments list
+                        let comments=post.comments
+                        if(comments.length>0){
+                            //add a list of comments
+                            let commentsUL=document.createElement('ul')
+                            comments.forEach(function(comment){
+                                let commentLi=document.createElement('li')
+                                let commentLiText=document.createElement('p')
+                                commentLiText.textContent=`${comment.message} (by ${comment.user}) [likes:${comment.likes}]`
+                                //add like button and code to handle like later
+                                commentLi.appendChild(commentLiText)
+                                commentsUL.appendChild(commentLi)
+                            })
+                            li.appendChild(commentsUL)
+                        }
+                        
+                        recentPostsList.appendChild(li)
+
+
+
+                        // show image if present
+                if(post.imagePath){
+                    let postImage=document.createElement('img')
+                    postImage.src=post.imagePath
+                    postImage.alt="temporary alt tag"
+                    postImage.classList.add("post-image-thumbnail")
+                    li.appendChild(postImage)
+                } else {
+                    let noPostImage=document.createElement('p')
+                    // if not image is sent by the user this text will show
+                    noPostImage.textContent="No Image Sent!"
+                    li.appendChild(noPostImage)
+                }
+                    })
+                }
+        
+                //////////////////////////////////
+        
+    
+                // This code below handles post likes by the PostID
+                function processLike(event){
+                    let likedPostId=event.target.getAttribute("data-post-id");
+                    // console.log('you liked '+likedPostId)
+                    let options={
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            likedPostID:likedPostId
+                        })
+                    }
+                    fetch('/like',options)
+                        .then(response=>response.json())
+                        .then(fetchedData=>{
+                            recentPosts=fetchedData.posts
+                            handleServerData()
+                        })
+                }
+        
+                // If view post button is pressed, grab its post id attribute and 
+                // direct the user to the view post page with this added in 
+                // url search params
+                function processView(event){
+              
+              
+                }
+                
+                
+            </script>
+        
+    
+
+        <form action="/newpost" enctype="multipart/form-data" method="POST">
+       <!-- Within this section of code the user can type there message and also upload there images -->  
+        <div class="container">
+            <div class="message-box">
+
+
+                <!-- If the timer has not ended the text box will be disabled --> 
+                <input type="text" id="message" name="message" placeholder="Type your message..." disabled>
+                 
+
+                <!-- After user is ready to send the message they can click send only after the timer goes other the button will be disabled --> 
+              <button class ="sendbuttom" type="submit" value="Send" id="sendButton" disabled>Send</button>
+            </div>
+            
+            <!-- This allows the user to upload images from there computer --> 
+            <input  class="uploadfile" type="file" name="myImage" accept="image/*" />
+          </div>
+        </form>
+
+
+        <script>
+
+            // This retrives the text box and send button elements
+            const message = document.getElementById('message');
+            const sendButton = document.getElementById('sendButton');
+
+           // The code below this will disable the ablity for a user to send a message
+           message.disabled = true;
+           sendButton.disabled = true;
+
+           // This will allow the text box and send button to work only after 30 seconds
+           setTimeout(() => {
+           message.disabled = false;
+           sendButton.disabled = false;
+           }, 30000); // 30  seconds in milliseconds
+
+
+           /////////////////////////////////////////////////////
+
+    // Function to start the timer
+function countdownTimer(duration, display) {
+  var timer = duration, seconds;
+  var countdown = setInterval(function () {
+    seconds = parseInt(timer % 60, 10);
+
+    display.textContent = seconds;
+
+    if (--timer < 0) {
+      clearInterval(countdown);
+      display.style.display = "none";
+      document.getElementById("timertext").style.display = "none";
+    }
+  }, 1000);
+}
+
+// When the page is opened the timer will display the 30 seconds
+window.onload = function () {
+  var Seconds = 30,
+    display = document.querySelector('#counttimere');
+    countdownTimer(Seconds, display);
+};
+           
+        </script>
+
+
+            </div>
+            
+        
+  </body>
+    </html>
+
+    
